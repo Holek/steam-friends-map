@@ -141,7 +141,7 @@ end
 
 
 def get_friends(steamID64)
-  friends = JSON.parse(open("http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=#{ENV['STEAM_WEB_API_KEY']}&steamid=#{steamID64}&relationship=friend&format=json").read)
+  friends = JSON.parse(open("https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=#{ENV['STEAM_WEB_API_KEY']}&steamid=#{steamID64}&relationship=friend&format=json").read)
   friends["friendslist"]["friends"].map{|friend|friend["steamid"]}
 end
 
