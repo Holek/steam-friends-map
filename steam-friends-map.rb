@@ -10,7 +10,6 @@ end
 # at this point rubygems is available
 require 'omniauth'
 require 'omniauth-steam-nitrogs'
-require 'pry'
 require 'steam_location'
 
 STATES = ["Offline", "Online",  "Busy", "Away", "Snooze", "Looking to trade", "Looking to play"]
