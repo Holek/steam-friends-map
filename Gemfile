@@ -1,0 +1,5 @@
+source 'http://rubygems.org'
+gem 'sinatra'
+gem 'omniauth'
+gem 'omniauth-steam-nitrogs'
+gem 'steam_location', git: 'git://github.com/Holek/steam-friends-countries.git'
