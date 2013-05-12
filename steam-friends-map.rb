@@ -93,8 +93,8 @@ JS
     if (status == google.maps.GeocoderStatus.OK) {
       window.map.setCenter(results[0].geometry.location);
       new google.maps.Marker({
-          map: window.map,
-          position: results[0].geometry.location
+        map: window.map,
+        position: results[0].geometry.location
       });
     }
   });
@@ -130,13 +130,12 @@ function initialize() {
   #{user_location_js}
   window.markers = []
   window.placeMarker = function(results, status) {
-    console.log(status);
     if (status == google.maps.GeocoderStatus.OK)
       window.markers.push(new google.maps.Marker({position: results[0].geometry.location}));
   };
   #{javascript_markers.join}
   #{javascript_unkown_markers.join}
-  setTimeout('new MarkerClusterer(window.map, window.markers);', 1000);
+  setTimeout('new MarkerClusterer(window.map, window.markers);', #{index*500});
 }
 window.onload = initialize;
 </script>
