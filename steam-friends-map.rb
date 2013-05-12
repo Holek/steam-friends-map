@@ -63,8 +63,8 @@ JS
     end
   end
 
-  user = SteamLocation.find(*(auth['info']['location'].split(', ').reverse))
-  if user[:coordinates]
+  user = SteamLocation.find(*(auth['info']['location'].split(', ').reverse)) unless auth['info']['location'].empty?
+  if user && user[:coordinates]
     user_location_js = <<-JS
     var user_location = new google.maps.LatLng(#{user[:coordinates]});
     window.map.setCenter(user_location);
@@ -75,7 +75,7 @@ JS
 JS
   else
     user_location_js = <<-JS
-  var player_location = '#{player_location}',
+  var player_location = '#{auth['info']['location']}',
   player_location_coord;
   window.geocoder.geocode( { 'address': player_location}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
