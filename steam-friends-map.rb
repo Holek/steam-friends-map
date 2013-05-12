@@ -12,11 +12,21 @@ require 'omniauth'
 require 'omniauth-steam-nitrogs'
 require 'steam_location'
 
+
+
 STATES = ["Offline", "Online",  "Busy", "Away", "Snooze", "Looking to trade", "Looking to play"]
 
 use Rack::Session::Cookie
 use OmniAuth::Builder do
   provider :steam, ENV['STEAM_WEB_API_KEY']
+end
+
+error OpenURI::HTTPError do
+  if request.env['omniauth.auth']
+    "Oi! Didn't I say your profile must be public? Change your <a href=\"http://steamcommunity.com/profile/#{request.env['omniauth.auth'][:uid]}/edit/settings\">Steam privacy settings</a>, <a href=\"/\">go back and try again</a>!"
+  else
+    'Bad things happen'
+  end
 end
 
 get '/' do
@@ -28,6 +38,8 @@ get '/' do
 </head>
 <body>
   <a href='/auth/steam'><img src="http://cdn.steamcommunity.com/public/images/signinthroughsteam/sits_small.png" /></a><br/>
+
+  <strong>Your profile must be public for this map to work!</strong>
 
   <h4> Policy information </h4>
   <ul>
