@@ -23,7 +23,7 @@ end
 
 error OpenURI::HTTPError do
   if request.env['omniauth.auth']
-    "Oi! Didn't I say your profile must be public? Change your <a href=\"http://steamcommunity.com/profile/#{request.env['omniauth.auth'][:uid]}/edit/settings\">Steam privacy settings</a>, <a href=\"/\">go back and try again</a>!"
+    "Oi! Didn't I say your profile must be public? Change your <a href=\"http://steamcommunity.com/profiles/#{request.env['omniauth.auth'][:uid]}/edit/settings\">Steam privacy settings</a>, <a href=\"/\">go back and try again</a>!"
   else
     'Bad things happen'
   end
