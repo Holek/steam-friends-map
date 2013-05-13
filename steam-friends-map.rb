@@ -69,7 +69,7 @@ window.markers.push(new google.maps.Marker({
   icon: "#{friend_group.first['avatar']}",
   shadow: {
     anchor: steamProfileShadow,
-    url: 'http://img.poltyn.com/maps_shadow.png'
+    url: 'http://img.poltyn.com/maps_shadow#{'_online' unless friend_group.first['personastate'].zero?}.png'
   },
   position: new google.maps.LatLng(#{coordinates})
 }));
