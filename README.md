@@ -1,6 +1,6 @@
 # Steam Friends' Map
 
-![Example map](http://img.poltyn.com/steam-friends-map-20130316-171802.png)
+![Example map](http://img.poltyn.com/steam-map-20130513-200851.png)
 
 This app has been developed to show all your friends' locations from [Steam Community](http://steamcommunity.com). Steam has a great social network for gamers, but it lacks in showing global information about players.
 
