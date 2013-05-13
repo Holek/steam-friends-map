@@ -65,7 +65,14 @@ post '/auth/:name/callback' do
   friend_details.each do |location_string, friend_group|
     if coordinates = friend_group.first[:coordinates]
       javascript_markers << <<-JS
-  window.markers.push(new google.maps.Marker({position:new google.maps.LatLng(#{coordinates})}));
+window.markers.push(new google.maps.Marker({
+  icon: "#{friend_group.first['avatar']}",
+  shadow: {
+    anchor: steamProfileShadow,
+    url: 'http://img.poltyn.com/maps_shadow.png'
+  },
+  position: new google.maps.LatLng(#{coordinates})
+}));
 JS
     else
       javascript_unkown_markers << <<-JS
@@ -119,6 +126,7 @@ body{height:100%;margin:0;padding:0}
 
 <script type="text/javascript">
 function initialize() {
+  steamProfileShadow = new google.maps.Point(20,36)
   window.geocoder = new google.maps.Geocoder();
   var mapOptions = {
     center: new google.maps.LatLng(0, 0),
@@ -157,7 +165,7 @@ def get_friends(steamID64)
 end
 
 def get_friends_details(friend_ids_original)
-  ignored_keys = %w(lastlogoff avatar avatarfull primaryclanid timecreated)
+  ignored_keys = %w(lastlogoff avatarfull primaryclanid timecreated)
   friend_ids = friend_ids_original.clone
   friend_info = []
   # the API handles up to 100 steam IDs at the time
@@ -176,8 +184,9 @@ def get_friends_details(friend_ids_original)
     ignored_keys.each { |k| friend.delete(k)}
     friend.merge!(SteamLocation.find(friend))
     # Ruby doesn't have Array#group... WTF?
-    friend_groups[friend[:map_search_string]] ||= []
-    friend_groups[friend[:map_search_string]] << friend
+    friend_group = friend[:coordinates] || friend[:map_search_string]
+    friend_groups[friend_group] ||= []
+    friend_groups[friend_group] << friend
   end
   friend_groups
 end
